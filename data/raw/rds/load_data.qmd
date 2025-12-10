@@ -78,12 +78,14 @@ for (stem in stems) {
 
 ```
 ```{r}
-t7 <- readRDS("data/raw/rds/t7.rds")
-
-dim(t7)       # rows, columns
-head(t7)      # first few rows
-str(t7)       # structure (types, names)
-names(t7)     # column names
-
+#load all dfs in 
+t3  <- readRDS("data/raw/rds/t3.rds")
+t6  <- readRDS("data/raw/rds/t6.rds")
+t7  <- readRDS("data/raw/rds/t7.rds")
+t9  <- readRDS("data/raw/rds/t9.rds")
+t12 <- readRDS("data/raw/rds/t12.rds")
+w7  <- readRDS("data/raw/rds/w7.rds")
+w8  <- readRDS("data/raw/rds/w8.rds")
+w9  <- readRDS("data/raw/rds/w9.rds")
 
 ```
