@@ -36,6 +36,7 @@ renv/local/
 .Ruserdata
 *.Rproj.user
 
-# Data files (if needed to exclude)
-# *.dat
+# Data files
+*.dat
+Data/*.dat
 
