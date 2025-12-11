@@ -1,0 +1,169 @@
+---
+title: "Table 3
+format: html
+---
+
+```{r}
+library(dplyr)
+library(splines)
+library(purrr)
+library(tibble)
+
+## ---- helpers ----
+
+make_d21 <- function(df, base) {
+  a6  <- df[[paste0(base, "6")]]
+  a9  <- df[[paste0(base, "9")]]
+  a12 <- df[[paste0(base, "12")]]
+  log(a12 + 10) - 2 * log(a9 + 10) + log(a6 + 10)
+}
+
+make_d21_ihs <- function(df, base) {
+  a6  <- df[[paste0(base, "6")]]
+  a9  <- df[[paste0(base, "9")]]
+  a12 <- df[[paste0(base, "12")]]
+  asinh(a12 + 10) - 2 * asinh(a9 + 10) + asinh(a6 + 10)
+}
+
+# same sample as main analysis
+make_reg_sample <- function(dat) {
+  dat %>%
+    filter(
+      age_ok,
+      for_profit,
+      yr1jb1 == 1,
+      y401k,
+      notmissing
+    )
+}
+
+grab_become <- function(fit, name = "temp") {
+  s <- summary(fit)$coef
+  tibble(
+    estimate = s[name, "Estimate"],
+    se       = s[name, "Std. Error"]
+  )
+}
+
+## Panel A: temp + spline in Wave 6 + controls
+run_panelA <- function(df, dep, base6) {
+  f <- as.formula(
+    paste0(
+      dep, " ~ temp + bs(", base6, ", df = 20) + ",
+      "tage + I(tage^2) + hh_inc_year + incmissing"
+    )
+  )
+  lm(f, data = df, weights = wpfinwgt)
+}
+
+## Panel B: temp + Wave6 + temp:Wave6 + controls
+run_panelB <- function(df, dep, base6) {
+  f <- as.formula(
+    paste0(
+      dep, " ~ temp + ", base6, " + temp:", base6, " + ",
+      "tage + I(tage^2) + hh_inc_year + incmissing"
+    )
+  )
+  lm(f, data = df, weights = wpfinwgt)
+}
+
+## Panel C: IHS outcome, temp + log(A6) + controls
+run_panelC <- function(df, dep_ihs, base6) {
+  f <- as.formula(
+    paste0(
+      dep_ihs, " ~ temp + log(", base6, " + 10) + ",
+      "tage + I(tage^2) + hh_inc_year + incmissing"
+    )
+  )
+  lm(f, data = df, weights = wpfinwgt)
+}
+
+## Table 3 rep func
+
+run_table3_rep <- function(dat_rep) {
+  df <- make_reg_sample(dat_rep)
+
+  # build outcomes (log 2nd diffs)
+  df$d21_401k   <- make_d21(df, "taltb")
+  df$d21_ira    <- make_d21(df, "thhira")
+  df$d21_other  <- make_d21(df, "otherassets")
+  df$d21_sec    <- make_d21(df, "thhscdbt")
+  df$d21_unsec  <- make_d21(df, "rhhuscbt")
+  df$d21_car    <- make_d21(df, "tcarval")
+
+  # IHS for Panel C
+  df$d21_401k_ihs   <- make_d21_ihs(df, "taltb")
+  df$d21_ira_ihs    <- make_d21_ihs(df, "thhira")
+  df$d21_other_ihs  <- make_d21_ihs(df, "otherassets")
+  df$d21_sec_ihs    <- make_d21_ihs(df, "thhscdbt")
+  df$d21_unsec_ihs  <- make_d21_ihs(df, "rhhuscbt")
+  df$d21_car_ihs    <- make_d21_ihs(df, "tcarval")
+
+  outcomes <- c("d21_401k","d21_ira","d21_other",
+                "d21_sec","d21_unsec","d21_car")
+  bases6   <- c("taltb6","thhira6","otherassets6",
+                "thhscdbt6","rhhuscbt6","tcarval6")
+  ihs_out  <- c("d21_401k_ihs","d21_ira_ihs","d21_other_ihs",
+                "d21_sec_ihs","d21_unsec_ihs","d21_car_ihs")
+
+  ## Panel A
+  fitsA  <- Map(function(y, b6) run_panelA(df, y, b6), outcomes, bases6)
+  panelA <- map_dfr(fitsA, grab_become, .id = "col")
+  panelA$R2 <- map_dbl(fitsA, ~ summary(.x)$r.squared)
+
+  ## Panel B
+  fitsB  <- Map(function(y, b6) run_panelB(df, y, b6), outcomes, bases6)
+  panelB <- map_dfr(fitsB, grab_become, .id = "col")
+  panelB$R2 <- map_dbl(fitsB, ~ summary(.x)$r.squared)
+
+  wave6_int <- map_dfr(fitsB, function(fit) {
+    s <- summary(fit)$coef
+    int_row  <- grep("^temp:", rownames(s))       # temp:base6
+    base_row <- grep("6$", rownames(s))[1]        # base6 term
+    tibble(
+      coef_wave6x = s[int_row, "Estimate"],
+      se_wave6x   = s[int_row, "Std. Error"],
+      coef_wave6  = s[base_row, "Estimate"],
+      se_wave6    = s[base_row, "Std. Error"]
+    )
+  }, .id = "col")
+
+  panelB <- bind_cols(panelB, wave6_int[,-1])
+
+  ## Panel C
+  fitsC  <- Map(function(y, b6) run_panelC(df, y, b6), ihs_out, bases6)
+  panelC <- map_dfr(fitsC, grab_become, .id = "col")
+  panelC$R2 <- map_dbl(fitsC, ~ summary(.x)$r.squared)
+
+  list(
+    panelA = panelA,
+    panelB = panelB,
+    panelC = panelC
+  )
+}
+
+```
+
+```{r}
+##  use it 
+res3_rep <- run_table3_rep(dat_rep)
+
+res3_rep$panelA
+res3_rep$panelB
+res3_rep$panelC
+```
+
+```{r}
+res3_aligned <- run_table3_rep(dat_raw_aligned)
+
+res3_aligned$panelA
+res3_aligned$panelB
+res3_aligned$panelC
+```
+```{r}
+res3_raw <- run_table3_rep(dat_raw)
+res3_raw$panelA
+res3_raw$panelB
+res3_raw$panelC
+
+```
