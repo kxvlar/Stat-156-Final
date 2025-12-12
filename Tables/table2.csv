@@ -1,0 +1,55 @@
+"dataset","outcome","spec","coef_temp","se_temp","n"
+"Raw aligned","otherassets","controls",-0.114495686609495,0.290511592194869,819
+"Raw non-aligned","otherassets","controls",-0.0264527595795799,0.246616268998839,1096
+"Replication","otherassets","controls",-0.0943134243660449,0.288711650643113,823
+"Raw aligned","otherassets","controls_plus_lag",-0.0420216407707941,0.27961179174502,819
+"Raw non-aligned","otherassets","controls_plus_lag",0.0202257960049214,0.237338108045255,1096
+"Replication","otherassets","controls_plus_lag",-0.0313841727410415,0.278486478570621,823
+"Raw aligned","otherassets","no_controls",-0.0849833468564882,0.287195927744266,835
+"Raw non-aligned","otherassets","no_controls",-0.00689301513358183,0.245530064496212,1114
+"Replication","otherassets","no_controls",-0.0537208504671254,0.286382326496789,840
+"Raw aligned","rhhuscbt","controls",-0.173567040288534,0.399525239578293,820
+"Raw non-aligned","rhhuscbt","controls",-0.125489783441675,0.352860856134852,1097
+"Replication","rhhuscbt","controls",-0.137051513225095,0.398077962498201,824
+"Raw aligned","rhhuscbt","controls_plus_lag",-0.0964708477351676,0.378006440300268,820
+"Raw non-aligned","rhhuscbt","controls_plus_lag",-0.0655013006597327,0.335450519617754,1097
+"Replication","rhhuscbt","controls_plus_lag",-0.0686326184431404,0.376547677623257,824
+"Raw aligned","rhhuscbt","no_controls",-0.112094305418592,0.394239634783358,836
+"Raw non-aligned","rhhuscbt","no_controls",-0.0889996863333858,0.35134067342313,1115
+"Replication","rhhuscbt","no_controls",-0.0841702826998478,0.392728095932843,841
+"Raw aligned","taltb","controls",0.975168340820037,0.286927826625765,820
+"Raw non-aligned","taltb","controls",0.817416233057064,0.256072140163574,1097
+"Replication","taltb","controls",0.952408531442082,0.285148992051593,824
+"Raw aligned","taltb","controls_plus_lag",1.08372334925021,0.288040131323697,820
+"Raw non-aligned","taltb","controls_plus_lag",0.981323912046774,0.254080632472005,1097
+"Replication","taltb","controls_plus_lag",1.05006598876287,0.285846826920017,824
+"Raw aligned","taltb","no_controls",0.96016733485519,0.287211552970817,836
+"Raw non-aligned","taltb","no_controls",0.834896986270763,0.252876649377612,1115
+"Replication","taltb","no_controls",0.93349928099214,0.284506610965303,841
+"Raw aligned","tcarval","controls",-0.378809701787781,0.295732340794218,820
+"Raw non-aligned","tcarval","controls",-0.296131491984838,0.24613768265112,1097
+"Replication","tcarval","controls",-0.425463902338337,0.298102941124002,824
+"Raw aligned","tcarval","controls_plus_lag",-0.263582091990631,0.282241631054127,820
+"Raw non-aligned","tcarval","controls_plus_lag",-0.215349631728653,0.235732941958296,1097
+"Replication","tcarval","controls_plus_lag",-0.302784754266501,0.284308894674167,824
+"Raw aligned","tcarval","no_controls",-0.426362242669085,0.287979193661205,836
+"Raw non-aligned","tcarval","no_controls",-0.319545988558751,0.240408774784562,1115
+"Replication","tcarval","no_controls",-0.49631141965614,0.290517833586446,841
+"Raw aligned","thhira","controls",0.527049730353132,0.263781934558797,820
+"Raw non-aligned","thhira","controls",0.553842951649036,0.218774602986802,1097
+"Replication","thhira","controls",0.503425727790439,0.262022326899454,824
+"Raw aligned","thhira","controls_plus_lag",0.491159861193039,0.255154707007877,820
+"Raw non-aligned","thhira","controls_plus_lag",0.503595432695392,0.211752280623268,1097
+"Replication","thhira","controls_plus_lag",0.469275581112098,0.253500489430638,824
+"Raw aligned","thhira","no_controls",0.523500379802587,0.26027569183064,836
+"Raw non-aligned","thhira","no_controls",0.555032431062126,0.217601360890646,1115
+"Replication","thhira","no_controls",0.553242478303826,0.262643988403615,841
+"Raw aligned","thhscdbt","controls",0.040868062913909,0.346902221829911,820
+"Raw non-aligned","thhscdbt","controls",-0.0914954972790502,0.290177802948414,1097
+"Replication","thhscdbt","controls",0.0416104284530198,0.344268939885109,824
+"Raw aligned","thhscdbt","controls_plus_lag",0.0807719498823945,0.341668380517814,820
+"Raw non-aligned","thhscdbt","controls_plus_lag",-0.0460350161582551,0.28458154952506,1097
+"Replication","thhscdbt","controls_plus_lag",0.077320621756218,0.338580342213842,824
+"Raw aligned","thhscdbt","no_controls",0.0960592572712958,0.343992112008081,836
+"Raw non-aligned","thhscdbt","no_controls",-0.0583068389283347,0.289235462320217,1115
+"Replication","thhscdbt","no_controls",0.116777724104426,0.343276843824532,841
